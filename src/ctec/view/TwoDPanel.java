@@ -3,6 +3,7 @@ package ctec.view;
 import ctec.controller.TwoDController;
 import javax.swing.JPanel;
 import javax.swing.SpringLayout;
+import javax.swing.JTable;
 
 public class TwoDPanel extends JPanel
 {
@@ -13,7 +14,6 @@ public class TwoDPanel extends JPanel
 	{
 		this.baseController = baseController;
 		baseLayout = new SpringLayout();
-		
 		setupPanel();
 		setupLayout();
 		setupListeners();

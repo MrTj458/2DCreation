@@ -92,4 +92,14 @@ public class ParkingLot
 		
 		return takenSpots;
 	}
+	
+	public boolean[][] getParkingLotArray()
+	{
+		return parkingLot;
+	}
+	
+	public String[] getColumnNames()
+	{
+		return colNames;
+	}
 }
