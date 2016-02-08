@@ -3,22 +3,22 @@ package ctec.model;
 public class ParkingLot
 {
 ////////////////////Setup////////////////////
-	private boolean[][] parkingLot;
+	private Object[][] parkingLot;
 	private String[] colNames;
 	
 	public ParkingLot()
 	{
-		parkingLot = new boolean[4][5];
+		parkingLot = new Object[4][5];
 		colNames = new String[5];
 		
 		setupColNames();
 		setupParkingLot();
 	}
 	
-	public ParkingLot(int rows, int columns)
+	public ParkingLot(int rows, int cols)
 	{
-		parkingLot = new boolean[rows][columns];
-		colNames = new String[columns];
+		parkingLot = new Object[rows][cols];
+		colNames = new String[cols];
 		
 		setupColNames();
 		setupParkingLot();
@@ -38,7 +38,16 @@ public class ParkingLot
 		{
 			for(int col = 0; col < parkingLot[0].length; col++)
 			{
-				parkingLot[row][col] = false;
+				int isTaken = (int) (Math.random() * 2);
+				
+				if(isTaken > 0)
+				{
+					parkingLot[row][col] = "true";
+				}
+				else
+				{
+					parkingLot[row][col] = "false";
+				}
 			}
 		}
 	}
@@ -49,7 +58,7 @@ public class ParkingLot
 	{
 		boolean isTaken = false;
 		
-		if(parkingLot[row][col] == true)
+		if(parkingLot[row][col].equals("true"))
 		{
 			isTaken = true;
 		}
@@ -93,7 +102,7 @@ public class ParkingLot
 		return takenSpots;
 	}
 	
-	public boolean[][] getParkingLotArray()
+	public Object[][] getParkingLotArray()
 	{
 		return parkingLot;
 	}
