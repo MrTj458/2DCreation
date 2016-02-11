@@ -10,7 +10,7 @@ public class TwoDController
 	
 	public TwoDController()
 	{
-		parkingLot = new ParkingLot(12, 5);
+		parkingLot = new ParkingLot();
 	}
 	
 	public void start()

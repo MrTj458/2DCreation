@@ -19,6 +19,7 @@ public class TwoDFrame extends JFrame
 	private void setupFrame()
 	{
 		this.setContentPane(basePanel);
+		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setResizable(false);
 		this.setSize(500, 500);
 		this.setTitle("2D Array Project");
