@@ -31,7 +31,8 @@ public class TwoDPanel extends JPanel
 	private JLabel brandLabel;
 	private JLabel isTaken;
 	private JLabel isTakenInfo;
-	private JSpinner isTakenSpinner;
+	private JButton setTaken;
+	private JButton setOpen;
 
 	
 	public TwoDPanel(TwoDController baseController)
@@ -45,11 +46,10 @@ public class TwoDPanel extends JPanel
 		carBrandField = new JTextField("Car brand");
 		takenLabel = new JLabel("Spot taken: ");
 		brandLabel = new JLabel("The car in this spot is a: ");
-		isTaken = new JLabel("Is the spot taken:");
-		isTakenInfo = new JLabel("0 = open, 1 = taken");
+		setTaken = new JButton("Set taken");
+		setOpen = new JButton("Set open");
 		
 		setupTable();
-		setupSpinner();
 		setupPanel();
 		setupLayout();
 		setupListeners();
@@ -60,14 +60,6 @@ public class TwoDPanel extends JPanel
 		String [] columnHeaders = {"Column 0 ", "Column 1", "Column 2", "Column 3", "Column 4"};
 		DefaultTableModel tableModel = new DefaultTableModel(baseController.getLot(), columnHeaders);
 		lotTable = new JTable(tableModel);
-	}
-	
-	private void setupSpinner()
-	{
-		SpinnerModel spinnerModel = new SpinnerNumberModel(0, 0, 1, 1);
-		isTakenSpinner = new JSpinner(spinnerModel);
-		baseLayout.putConstraint(SpringLayout.NORTH, isTakenSpinner, 0, SpringLayout.NORTH, rowField);
-		baseLayout.putConstraint(SpringLayout.EAST, isTakenSpinner, 0, SpringLayout.EAST, carBrandField);
 	}
 	
 	private void setupPanel()
@@ -81,9 +73,8 @@ public class TwoDPanel extends JPanel
 		this.add(lotTable);
 		this.add(takenLabel);
 		this.add(brandLabel);
-		this.add(isTakenSpinner);
-		this.add(isTaken);
-		this.add(isTakenInfo);
+		this.add(setOpen);
+		this.add(setTaken);
 	}
 	
 	private void setupLayout()
@@ -94,11 +85,11 @@ public class TwoDPanel extends JPanel
 		baseLayout.putConstraint(SpringLayout.SOUTH, rowField, -6, SpringLayout.NORTH, displayButton);
 		baseLayout.putConstraint(SpringLayout.WEST, displayButton, 0, SpringLayout.WEST, rowField);
 		baseLayout.putConstraint(SpringLayout.SOUTH, carBrandField, -12, SpringLayout.SOUTH, this);
-		baseLayout.putConstraint(SpringLayout.NORTH, isTaken, 6, SpringLayout.NORTH, rowField);
-		baseLayout.putConstraint(SpringLayout.WEST, isTaken, 0, SpringLayout.WEST, carBrandField);
+		baseLayout.putConstraint(SpringLayout.SOUTH, setOpen, -6, SpringLayout.NORTH, changeButton);
+		baseLayout.putConstraint(SpringLayout.EAST, setOpen, -6, SpringLayout.WEST, setTaken);
 		baseLayout.putConstraint(SpringLayout.WEST, colField, 6, SpringLayout.EAST, rowField);
-		baseLayout.putConstraint(SpringLayout.NORTH, isTakenInfo, 0, SpringLayout.NORTH, brandLabel);
-		baseLayout.putConstraint(SpringLayout.EAST, isTakenInfo, 0, SpringLayout.EAST, carBrandField);
+		baseLayout.putConstraint(SpringLayout.NORTH, setTaken, 1, SpringLayout.NORTH, rowField);
+		baseLayout.putConstraint(SpringLayout.EAST, setTaken, 0, SpringLayout.EAST, carBrandField);
 		baseLayout.putConstraint(SpringLayout.SOUTH, colField, -6, SpringLayout.NORTH, displayButton);
 		baseLayout.putConstraint(SpringLayout.WEST, brandLabel, 10, SpringLayout.WEST, this);
 		baseLayout.putConstraint(SpringLayout.WEST, changeButton, 6, SpringLayout.EAST, displayButton);
@@ -121,6 +112,37 @@ public class TwoDPanel extends JPanel
 				ParkingSpot lot[][] = baseController.getLot();
 				takenLabel.setText("Spot taken: " + Boolean.toString(lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].isTaken()));
 				brandLabel.setText("The car in this spot is a: " + lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].getCarBrand());
+			}
+		});
+		
+		changeButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				//Create parkinglot
+				ParkingSpot lot[][] = baseController.getLot();
+				
+				//Change car brand
+				if(!brandLabel.getText().equals("") || !brandLabel.getText().equals("Car brand"))
+				{
+					lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].setCarBrand(brandLabel.getText());
+				}
+			}
+		});
+		
+		setTaken.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				
+			}
+		});
+		
+		setOpen.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				
 			}
 		});
 	}
