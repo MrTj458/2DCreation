@@ -5,6 +5,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.JButton;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JSpinner;
 import javax.swing.JTable;
@@ -40,7 +41,7 @@ public class TwoDPanel extends JPanel
 		this.baseController = baseController;
 		baseLayout = new SpringLayout();
 		displayButton = new JButton("Display the object");
-		changeButton = new JButton("Change the object");
+		changeButton = new JButton("Change the brand");
 		rowField = new JTextField("Row");
 		colField = new JTextField("Col");
 		carBrandField = new JTextField("Car brand");
@@ -109,9 +110,15 @@ public class TwoDPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				ParkingSpot lot[][] = baseController.getLot();
-				takenLabel.setText("Spot taken: " + Boolean.toString(lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].isTaken()));
-				brandLabel.setText("The car in this spot is a: " + lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].getCarBrand());
+				try
+				{
+					takenLabel.setText("Spot taken: " + Boolean.toString(baseController.checkTaken(getRow(), getCol())));
+					brandLabel.setText("The car in this spot is a: " + baseController.getBrand(getRow(), getCol()));
+				}
+				catch(Exception error)
+				{
+					JOptionPane.showMessageDialog(null, "Enter a valid row and column");
+				}
 			}
 		});
 		
@@ -119,13 +126,9 @@ public class TwoDPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				//Create parkinglot
-				ParkingSpot lot[][] = baseController.getLot();
-				
-				//Change car brand
 				if(!brandLabel.getText().equals("") || !brandLabel.getText().equals("Car brand"))
 				{
-					lot[Integer.parseInt(rowField.getText())][Integer.parseInt(colField.getText())].setCarBrand(brandLabel.getText());
+					baseController.setSpot(getRow(), getCol(), getCarBrand());
 				}
 			}
 		});
@@ -134,7 +137,7 @@ public class TwoDPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				
+				baseController.setSpot(getRow(), getCol(), true);
 			}
 		});
 		
@@ -142,8 +145,23 @@ public class TwoDPanel extends JPanel
 		{
 			public void actionPerformed(ActionEvent click)
 			{
-				
+				baseController.setSpot(getRow(), getCol(), false);
 			}
 		});
+	}
+	
+	private int getRow()
+	{
+		return Integer.parseInt(rowField.getText());
+	}
+	
+	private int getCol()
+	{
+		return Integer.parseInt(colField.getText());
+	}
+	
+	private String getCarBrand()
+	{
+		return carBrandField.getText();
 	}
 }

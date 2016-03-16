@@ -39,6 +39,26 @@ public class TwoDController
 		}
 	}
 	
+	public void setSpot(int row, int col, boolean isTaken)
+	{
+		lotSpots[row][col].setTaken(isTaken);
+	}
+	
+	public void setSpot(int row, int col, String carBrand)
+	{
+		lotSpots[row][col].setCarBrand(carBrand);
+	}
+	
+	public boolean checkTaken(int row, int col)
+	{
+		return lotSpots[row][col].isTaken();
+	}
+	
+	public String getBrand(int row, int col)
+	{
+		return lotSpots[row][col].getCarBrand();
+	}
+	
 	public ParkingSpot[][] getLot()
 	{
 		return lotSpots;
